@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"aluraFlixAPI/router"
 )
 
-func main(){
-	fmt.Println("Hello AluraFlix!");
+func main() {
+	router.HandleRequests()
 }
