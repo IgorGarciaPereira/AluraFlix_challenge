@@ -5,7 +5,7 @@ import (
 )
 
 type Video struct {
-	*gorm.Model
+	gorm.Model
 
 	Title       string `json:"title"`
 	Description string `json:"description"`
