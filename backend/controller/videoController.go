@@ -5,6 +5,7 @@ import(
   "strconv"
 
   "github.com/gin-gonic/gin"
+  "gopkg.in/validator.v2"
 
   "aluraFlixAPI/database"
   "aluraFlixAPI/database/models"
@@ -36,6 +37,13 @@ func CreateVideo(c *gin.Context){
   err := c.BindJSON(&video)
   if err != nil {
     c.JSON(http.StatusBadRequest, nil)
+    return
+  }
+
+  if errs :=validator.Validate(video); errs != nil {
+    c.JSON(http.StatusUnprocessableEntity, gin.H{
+      "message": errs,
+    })
     return
   }
 
