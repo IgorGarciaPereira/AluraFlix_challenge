@@ -17,5 +17,12 @@ func HandleRequests() {
 	video.PATCH("/:id", controller.UpdateVideo)
 	video.DELETE("/:id", controller.DeleteVideo)
 
+	category := r.Group("/category")
+	category.GET("/", controller.ListCategory)
+	category.GET("/:id", controller.GetCategory)
+	category.POST("/", controller.CreateCategory)
+	category.PATCH("/:id", controller.UpdateCategory)
+	category.DELETE("/:id", controller.DeleteCategory)
+
 	r.Run()
 }

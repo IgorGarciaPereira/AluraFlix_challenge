@@ -8,7 +8,6 @@ import (
 type Category struct{
   gorm.Model
 
-  ID    int     `json:"id"`
-  Title string  `json:"title"`
-  Color string  `json:"color"`
+  Title string  `json:"title" validate:"nonzero"`
+  Color string  `json:"color" validate:"nonzero"`
 }
