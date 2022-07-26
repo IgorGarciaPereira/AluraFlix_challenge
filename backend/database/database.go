@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 
 	"aluraFlixAPI/database/models"
+	"aluraFlixAPI/utils"
 )
 
 var DB *gorm.DB
@@ -28,4 +29,9 @@ func Connect() *gorm.DB {
 func AutoMigrations(DB *gorm.DB) {
 	DB.AutoMigrate(&models.Video{})
 	DB.AutoMigrate(&models.Category{})
+}
+
+func LoadSeeds(DB *gorm.DB){
+	seed := utils.GetContentFromFile("database/seed.sql")
+	DB.Exec(seed)
 }

@@ -13,7 +13,15 @@ import(
 
 func ListVideos(c *gin.Context){
   var videos []models.Video
-  database.DB.Find(&videos)
+
+  search := c.Query("search")
+
+  if search != "" {
+    searchParams := "%" + search + "%"
+    database.DB.Where("title LIKE ?", searchParams).Find(&videos)
+  }else{
+    database.DB.Find(&videos)
+  }
 
   c.JSON(http.StatusOK, videos)
 }
@@ -33,11 +41,27 @@ func GetVideo(c *gin.Context){
 
 func CreateVideo(c *gin.Context){
   var video models.Video
+  var category models.Category
 
   err := c.BindJSON(&video)
   if err != nil {
     c.JSON(http.StatusBadRequest, nil)
     return
+  }
+
+
+
+  if video.CategoryID == 0{
+    video.CategoryID = 1
+  }else{
+    database.DB.First(&category, video.CategoryID)
+
+    if category.ID == 0 {
+      c.JSON(http.StatusNotFound, gin.H{
+        "message": "category not found",
+      })
+      return
+    }
   }
 
   if errs :=validator.Validate(video); errs != nil {
