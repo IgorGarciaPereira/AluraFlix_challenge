@@ -19,6 +19,7 @@ func HandleRequests() {
 
 	category := r.Group("/category")
 	category.GET("/", controller.ListCategory)
+	category.GET("/:id/videos", controller.GetFullCategory)
 	category.GET("/:id", controller.GetCategory)
 	category.POST("/", controller.CreateCategory)
 	category.PATCH("/:id", controller.UpdateCategory)

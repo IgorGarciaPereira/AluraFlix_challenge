@@ -36,7 +36,7 @@ func CreateCategory(c *gin.Context){
 
 func ListCategory(c *gin.Context){
   var categories []models.Category
-  database.DB.Find(&categories);
+  database.DB.Preload("Videos").Find(&categories);
   c.JSON(http.StatusOK, categories)
 }
 
@@ -45,6 +45,27 @@ func GetCategory(c *gin.Context){
   id := c.Param("id")
 
   database.DB.First(&category, id)
+
+  if category.ID == 0 {
+    c.JSON(http.StatusNotFound, nil)
+    return
+  }
+
+  c.JSON(http.StatusOK, gin.H{
+    "ID": category.ID,
+    "CreatedAt": category.CreatedAt,
+  	"UpdatedAt": category.UpdatedAt,
+  	"DeletedAt": category.DeletedAt,
+  	"title": category.Title,
+  	"color": category.Color,
+  })
+}
+
+func GetFullCategory(c *gin.Context){
+  var category models.Category
+  id := c.Param("id")
+
+  database.DB.Preload("Videos").First(&category, id)
 
   if category.ID == 0 {
     c.JSON(http.StatusNotFound, nil)

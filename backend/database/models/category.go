@@ -10,4 +10,5 @@ type Category struct{
 
   Title string  `json:"title" validate:"nonzero"`
   Color string  `json:"color" validate:"nonzero"`
+  Videos []Video `json:"videos"`
 }

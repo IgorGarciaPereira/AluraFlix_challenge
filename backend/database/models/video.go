@@ -11,4 +11,5 @@ type Video struct {
 	Title       string `json:"title" validate:"nonzero"`
 	Description string `json:"description" validate:"nonzero"`
 	Url         string `json:"url" validate:"nonzero"`
+	CategoryID 	uint	 `json:"category_id"`
 }
