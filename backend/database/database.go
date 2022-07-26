@@ -27,4 +27,5 @@ func Connect() *gorm.DB {
 
 func AutoMigrations(DB *gorm.DB) {
 	DB.AutoMigrate(&models.Video{})
+	DB.AutoMigrate(&models.Category{})
 }
